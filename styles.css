@@ -5,62 +5,66 @@
     box-sizing: border-box;
 }
 
-html {
-    /* Mencegah scroll horizontal di level tertinggi */
-    overflow-x: hidden;
+html, body {
+    overflow-x: hidden; /* Mencegah seluruh halaman bisa digeser ke samping */
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
-    /* Mencegah scroll vertikal & horizontal pada body */
-    overflow: hidden;
-    position: relative; /* Menstabilkan layout */
 }
 
 .page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Menggunakan tinggi layar yang sebenarnya (dari JS) */
-    height: var(--app-height, 100vh);
-    padding: 0; /* Padding dihapus agar kartu menempel */
+    /* Gaya default untuk mobile (tidak ada centering) */
 }
 
-/* --- Container Utama --- */
+/* --- Container Utama (Layout Full Screen di Mobile) --- */
 .card-container {
     width: 100%;
-    height: 100%; /* Memenuhi page-wrapper */
-    max-width: 100%; 
-    max-height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    
-    overflow-y: auto; /* Scroll HANYA terjadi di dalam kartu ini */
+    height: var(--app-height, 100vh);
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
 }
 
-/* --- Bagian Header & Profil --- */
+/* --- Bagian Header (Sticky) --- */
 .profile-section {
     background-color: #63C2B3;
     text-align: center;
     position: relative;
-    padding: 60px 20px 20px 20px;
+    padding: 20px;
     background-image: url('assets/images/pattern.png');
     background-repeat: no-repeat;
-    background-position: right -40px center;
-    background-size: auto 110%;
+    background-position: right center;
+    background-size: contain;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 235px;
+    overflow: hidden;
+}
+
+.profile-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #63C2B3 20%, transparent 75%);
+    z-index: 1;
 }
 
 .logo {
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 110px;
+    width: 120px;
     opacity: 0;
     transform: translateX(-30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    z-index: 2;
 }
 
 .profile-wrapper {
@@ -68,6 +72,8 @@ body {
     transform: scale(0.8);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     transition-delay: 0.2s;
+    z-index: 2;
+    position: relative;
 }
 
 .profile-picture-container {
@@ -94,11 +100,12 @@ body {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
+/* --- Bagian Tombol Link (Scrollable) --- */
 .links-section {
     position: relative;
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0;
 }
 
 .links-section::before {
@@ -120,9 +127,7 @@ body {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    flex-grow: 1;
-    justify-content: center;
+    gap: 15px;
 }
 
 .link-button {
@@ -168,6 +173,7 @@ body {
     }
 }
 
+/* --- Footer (Sticky) --- */
 .footer-section {
     background-color: #4BAE9D;
     color: white;
@@ -176,8 +182,10 @@ body {
     font-size: 0.8em;
     font-weight: 500;
     border-top: 2px solid rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
 }
 
+/* --- Animasi --- */
 .card-container.loaded .logo,
 .card-container.loaded .profile-wrapper,
 .card-container.loaded .link-button {
@@ -189,6 +197,7 @@ body {
 .link-button:nth-child(2) { transition-delay: 0.5s; }
 .link-button:nth-child(3) { transition-delay: 0.6s; }
 
+/* --- Styling Modal Password --- */
 .modal-hidden { display: none; }
 #password-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
 #password-modal-overlay.visible { opacity: 1; visibility: visible; }
@@ -214,7 +223,23 @@ body {
 @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
 @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 40px #4CAF50; } }
 
-.card-container::-webkit-scrollbar { width: 8px; }
-.card-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-.card-container::-webkit-scrollbar-thumb { background-color: #a8a8a8; border-radius: 10px; border: 2px solid #f1f1f1; }
-.card-container::-webkit-scrollbar-thumb:hover { background-color: #8a8a8a; }
+/* --- Desain Scrollbar --- */
+.links-section::-webkit-scrollbar { width: 8px; }
+.links-section::-webkit-scrollbar-track { background: transparent; }
+.links-section::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+.links-section::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.3); }
+
+/* --- ATURAN RESPONSIF UNTUK DESKTOP --- */
+@media (min-width: 768px) {
+    .page-wrapper {
+        padding: 40px;
+    }
+
+    .card-container {
+        height: auto;
+        max-height: 90vh;
+        max-width: 420px;
+        border-radius: 24px;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+    }
+}
