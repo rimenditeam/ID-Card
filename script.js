@@ -6,21 +6,24 @@ const setAppHeight = () => {
 window.addEventListener('resize', setAppHeight);
 setAppHeight();
 
-// --- Efek Ripple Saat Tombol Diklik ---
+// === KODE BARU: Efek Ripple Saat Tombol Diklik =========
 function createRipple(event) {
     const button = event.currentTarget;
+
     const circle = document.createElement("span");
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
-    const rect = button.getBoundingClientRect();
+
     circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${event.clientX - rect.left - radius}px`;
-    circle.style.top = `${event.clientY - rect.top - radius}px`;
+    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
     circle.classList.add("ripple");
+
     const ripple = button.getElementsByClassName("ripple")[0];
     if (ripple) {
         ripple.remove();
     }
+    
     button.appendChild(circle);
 }
 
@@ -29,7 +32,8 @@ buttons.forEach(button => {
     button.addEventListener("click", createRipple);
 });
 
-// --- Kode untuk Animasi, Modal, dll. ---
+
+// --- Kode Lama (untuk animasi, modal, dll) ---
 window.addEventListener('load', () => {
     // Fungsi Animasi Awal
     const cardContainer = document.querySelector('.card-container');
@@ -40,7 +44,6 @@ window.addEventListener('load', () => {
     // Fungsi Modal Password
     const semuaTombolProteksi = document.querySelectorAll('.proteksi');
     const modalOverlay = document.getElementById('password-modal-overlay');
-    const modalTitle = document.getElementById('modal-title');
     const passwordForm = document.getElementById('password-form');
     const successMessage = document.getElementById('success-message');
     const passwordInput = document.getElementById('password-input');
@@ -74,13 +77,13 @@ window.addEventListener('load', () => {
 
     semuaTombolProteksi.forEach(tombol => {
         tombol.addEventListener('click', function(event) {
-            event.preventDefault();
+            // Untuk tombol yang diproteksi, kita tidak ingin ripple-nya mengarahkan ke link
+            // Tapi karena link-nya href="#", tidak masalah.
+            // Jika link-nya asli, kita perlu preventDefault() di sini.
+            
+            // Kita tetap ambil info password, tapi setelah ripple
             urlTujuanSaatIni = tombol.dataset.url;
             passwordBenarSaatIni = tombol.dataset.password;
-            const judulModal = tombol.dataset.title || 'Akses Terproteksi';
-            if (modalTitle) {
-                modalTitle.textContent = judulModal;
-            }
             tampilkanModal();
         });
     });
@@ -125,4 +128,4 @@ window.addEventListener('load', () => {
             }
         });
     }
-});
+}); 
