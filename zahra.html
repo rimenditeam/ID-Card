@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Taufik - Rimendi Photography</title>
+    <link rel="stylesheet" href="zahra.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="page-wrapper">
+        <div class="card-container">
+            
+            <header class="profile-section">
+                <img src="assets/images/Logo-rimendi.png" alt="Logo Rimendi" class="logo">
+                <div class="profile-wrapper">
+                    <div class="profile-picture-container">
+                        <img src="assets/images/profile-zahra.png" alt="Foto Zahra" class="profile-picture">
+                    </div>
+                    <h1 class="profile-name">ZAHRA</h1>
+                </div>
+            </header>
+
+            <main class="links-section">
+                <div class="buttons-wrapper">
+                    <a href="https://ahmadtaufik24.github.io/Testtt/rimendi.html" class="link-button">Explore Rimendi</a>
+                    
+                    <a href="#" class="link-button proteksi" 
+                       data-url="https://ahmadtaufik24.github.io/Testtt/internal.html" 
+                       data-password="Rpsba0128">Internal</a>
+                </div>
+            </main>
+
+            <footer class="footer-section">
+                <p>ID:0360HBD (Kreatif, Bussines Support)</p>
+            </footer>
+
+        </div> </main> 
+
+    <div id="password-modal-overlay" class="modal-hidden">
+        <div class="password-modal-content">
+            <div id="password-form">
+                <h2>Akses Internal</h2>
+                <p>Halaman ini diproteksi. Silakan masukkan password.</p>
+                <div class="input-container">
+                    <input type="password" id="password-input" placeholder="Ketik password di sini...">
+                    <p id="error-message" class="error-text"></p>
+                </div>
+                <div class="modal-buttons">
+                    <button id="submit-password-btn">Lanjutkan</button>
+                    <button id="cancel-password-btn" class="cancel-btn">Batal</button>
+                </div>
+            </div>
+            <div id="success-message" style="display: none;">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+                <h2>Berhasil!</h2>
+                <p>Anda akan diarahkan dalam sesaat...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
